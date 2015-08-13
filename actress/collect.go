@@ -71,8 +71,8 @@ func extractActressID(url string) (int, error) {
 	return id, nil
 }
 
-// ExtractActresses returns actresses whose names start with 'key'
-func ExtractActresses(key string) ([]dmm.Actress, error) {
+// CollectFromKey returns actresses whose names start with 'key'
+func CollectFromKey(key string) ([]dmm.Actress, error) {
 	firstPage := actressPage(key, 1)
 	pages, err := extractPageCount(firstPage)
 	if err != nil {

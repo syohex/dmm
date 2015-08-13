@@ -16,11 +16,9 @@ func TestCollectActressPageInfo(t *testing.T) {
 	}
 }
 
-func TestExtractActresses(t *testing.T) {
-	actresses, err := ExtractActresses("wa")
+func TestCollect(t *testing.T) {
+	actresses, err := Collect("wa")
 	if err != nil {
 		t.Fatalf("Can't extract 'wa' actresses")
 	}
-
-	t.Logf("@@ %v", actresses)
 }
