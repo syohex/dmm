@@ -17,8 +17,23 @@ func TestCollectActressPageInfo(t *testing.T) {
 }
 
 func TestCollect(t *testing.T) {
-	actresses, err := Collect("wa")
+	actresses, err := CollectFromKey("wa")
 	if err != nil {
 		t.Fatalf("Can't extract 'wa' actresses")
+	}
+
+	if len(actresses) == 0 {
+		t.Fatalf("no actresses")
+	}
+
+	found := false
+	for _, actress := range actresses {
+		if actress.Name == "若槻シェルビー" {
+			found = true
+		}
+	}
+
+	if !found {
+		t.Fatalf("parsing actress page is failed")
 	}
 }
