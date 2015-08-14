@@ -19,4 +19,15 @@ func TestActressProduct(t *testing.T) {
 	}
 
 	t.Log(products)
+
+	products, err = actress.Products(130)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if len(products) != 130 {
+		t.Fatalf("invalid return products number(got: %d)", len(products))
+	}
+
+	t.Log(products)
 }
