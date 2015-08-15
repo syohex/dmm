@@ -4,6 +4,22 @@ import (
 	"testing"
 )
 
+func TestKeywords(t *testing.T) {
+	keywords := Keywords()
+	if len(keywords) != 43 {
+		t.Fatal("Invalid keyword length")
+	}
+
+	m := make(map[string]int)
+	for _, k := range keywords {
+		if m[k] != 0 {
+			t.Fatalf("Found duplicate keyword: '%s'", k)
+		}
+
+		m[k]++
+	}
+}
+
 func TestCollectActressPageInfo(t *testing.T) {
 	url := "http://www.dmm.co.jp/digital/videoa/-/actress/=/keyword=a/"
 	pages, err := extractPageCount(url)
