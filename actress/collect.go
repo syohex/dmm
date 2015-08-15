@@ -18,7 +18,6 @@ var keywords = []string{
 	"na", "ni", "ne", "no",
 	"ha", "hi", "hu", "he", "ho",
 	"ma", "mi", "mu", "me", "mo",
-	"ma", "mi", "mu", "me", "mo",
 	"ya", "yu", "yo",
 	"ra", "ri", "ru", "re", "ro",
 	"wa",
