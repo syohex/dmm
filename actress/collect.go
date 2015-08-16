@@ -5,9 +5,10 @@ import (
 	"regexp"
 	"strconv"
 
+	"path"
+
 	"github.com/PuerkitoBio/goquery"
 	"github.com/syohex/dmm"
-	"path"
 )
 
 var keywords = []string{
@@ -70,6 +71,22 @@ func extractActressID(url string) (int, error) {
 	return id, nil
 }
 
+var productsRegexp = regexp.MustCompile(`出演作品：(\d+)`)
+
+func retrieveWorks(s string) (int, error) {
+	matches := productsRegexp.FindAllStringSubmatch(s, 1)
+	if len(matches) == 0 {
+		return 0, fmt.Errorf("Can't find products information")
+	}
+
+	products, err := strconv.Atoi(matches[0][1])
+	if err != nil {
+		return 0, err
+	}
+
+	return products, nil
+}
+
 // CollectFromKey returns actresses whose names start with 'key'
 func CollectFromKey(key string) ([]dmm.Actress, error) {
 	firstPage := actressPage(key, 1)
@@ -109,10 +126,18 @@ func CollectFromKey(key string) ([]dmm.Actress, error) {
 				return
 			}
 
+			spans := s.Find("span")
+			worksStr := spans.Eq(1).Text()
+			works, err := retrieveWorks(worksStr)
+			if err != nil {
+				return
+			}
+
 			actress := dmm.Actress{
 				ID:    id,
 				Name:  name,
 				Image: path.Base(imgURL),
+				Works: works,
 			}
 
 			actresses = append(actresses, actress)

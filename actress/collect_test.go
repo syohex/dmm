@@ -45,6 +45,9 @@ func TestCollect(t *testing.T) {
 	found := false
 	for _, actress := range actresses {
 		if actress.Name == "若槻シェルビー" {
+			if actress.Works <= 0 {
+				t.Fatalf("Can't extract 'Works' information")
+			}
 			found = true
 		}
 	}

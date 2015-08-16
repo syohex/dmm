@@ -12,6 +12,7 @@ type Actress struct {
 	ID    int
 	Name  string
 	Image string
+	Works int
 }
 
 func (a *Actress) pageURL(page int) string {
