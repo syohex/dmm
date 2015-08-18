@@ -54,12 +54,12 @@ func (a *Actress) Products(limit int) ([]Product, error) {
 				return
 			}
 
-			matches := productIDRegexp.FindAllStringSubmatch(href, 1)
-			if len(matches) == 0 {
+			matches := productIDRegexp.FindStringSubmatch(href)
+			if matches == nil {
 				return
 			}
 
-			id := matches[0][1]
+			id := matches[1]
 
 			img := s.Find("img")
 			title, ok := img.Attr("alt")

@@ -42,12 +42,12 @@ func extractPageCount(url string) (int, error) {
 	}
 
 	pageInfo := doc.Find(".list-boxpagenation").Find("p").Text()
-	matches := pageRegexp.FindAllStringSubmatch(pageInfo, 1)
-	if len(matches) == 0 {
+	matches := pageRegexp.FindStringSubmatch(pageInfo)
+	if matches == nil {
 		return 0, fmt.Errorf("not found page information in %s", url)
 	}
 
-	pages, err := strconv.Atoi(matches[0][1])
+	pages, err := strconv.Atoi(matches[1])
 	if err != nil {
 		return 0, err
 	}
@@ -58,12 +58,12 @@ func extractPageCount(url string) (int, error) {
 var actressIDRegexp = regexp.MustCompile(`id=(\d+)`)
 
 func extractActressID(url string) (int, error) {
-	matches := actressIDRegexp.FindAllStringSubmatch(url, 1)
-	if len(matches) == 0 {
+	matches := actressIDRegexp.FindStringSubmatch(url)
+	if matches == nil {
 		return 0, fmt.Errorf("ID is not found from '%s'", url)
 	}
 
-	id, err := strconv.Atoi(matches[0][1])
+	id, err := strconv.Atoi(matches[1])
 	if err != nil {
 		return 0, err
 	}
@@ -74,12 +74,12 @@ func extractActressID(url string) (int, error) {
 var productsRegexp = regexp.MustCompile(`出演作品：(\d+)`)
 
 func retrieveWorks(s string) (int, error) {
-	matches := productsRegexp.FindAllStringSubmatch(s, 1)
-	if len(matches) == 0 {
+	matches := productsRegexp.FindStringSubmatch(s)
+	if matches == nil {
 		return 0, fmt.Errorf("Can't find products information")
 	}
 
-	products, err := strconv.Atoi(matches[0][1])
+	products, err := strconv.Atoi(matches[1])
 	if err != nil {
 		return 0, err
 	}

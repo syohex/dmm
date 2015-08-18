@@ -22,12 +22,12 @@ func CalculatePages(url string, limit int) (int, error) {
 	}
 
 	pageInfo := doc.Find(".list-boxpagenation > p").Text()
-	matches := pageRegexp.FindAllStringSubmatch(pageInfo, 1)
-	if len(matches) == 0 {
+	matches := pageRegexp.FindStringSubmatch(pageInfo)
+	if matches == nil {
 		return 0, fmt.Errorf("can't get page information")
 	}
 
-	titles, err := strconv.Atoi(matches[0][1])
+	titles, err := strconv.Atoi(matches[1])
 	if err != nil {
 		return 0, err
 	}
